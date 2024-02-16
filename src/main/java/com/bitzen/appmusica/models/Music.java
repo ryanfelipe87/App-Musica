@@ -26,4 +26,7 @@ public class Music {
 
     @Column
     private Integer track;
+
+    @ManyToOne
+    private Album album;
 }

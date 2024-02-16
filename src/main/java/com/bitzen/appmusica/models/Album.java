@@ -21,9 +21,12 @@ public class Album {
     @Column
     private String title;
 
-    @Column
+    @Column(name = "year_launch")
     private String year;
 
     @Column
     private String imageUrl;
+
+    @ManyToOne
+    private Artist artist;
 }
