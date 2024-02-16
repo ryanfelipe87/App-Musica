@@ -29,4 +29,7 @@ public class Album {
 
     @ManyToOne
     private Artist artist;
+
+    public Album(Long id, Long id_null, String title, String year, String imageUrl) {
+    }
 }

@@ -3,6 +3,8 @@ package com.bitzen.appmusica.controllers;
 import com.bitzen.appmusica.dtos.AlbumDto;
 import com.bitzen.appmusica.services.AlbumService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,9 @@ public class AlbumController {
     private AlbumService albumService;
 
     @PostMapping
-    public AlbumDto createAlbum(@RequestBody AlbumDto albumDto) {
-        return albumService.createAlbum(albumDto);
+    public ResponseEntity<AlbumDto> createAlbum(@RequestBody AlbumDto albumDto) {
+        albumService.createAlbum(albumDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping
