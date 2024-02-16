@@ -1,6 +1,7 @@
 package com.bitzen.appmusica.services;
 
 import com.bitzen.appmusica.dtos.AlbumDto;
+import com.bitzen.appmusica.exceptions.BadRequestException;
 import com.bitzen.appmusica.models.Album;
 import com.bitzen.appmusica.repositories.AlbumRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +36,7 @@ public class AlbumService {
         if(album != null){
             return convertToDto(album);
         }
-        throw new IllegalArgumentException("Not exists album with this ID: " + id);
+        throw new BadRequestException("Not exists album with this ID: " + id);
     }
 
     public AlbumDto updateAlbum(Long id, AlbumDto albumDto){
@@ -45,7 +46,7 @@ public class AlbumService {
             album = repository.save(album);
             return convertToDto(album);
         }
-        throw new IllegalArgumentException("Not exists album with this ID: " + id);
+        throw new BadRequestException("Not exists album with this ID: " + id);
     }
 
     public void deleteAlbum(Long id){

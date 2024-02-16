@@ -1,6 +1,7 @@
 package com.bitzen.appmusica.services;
 
 import com.bitzen.appmusica.dtos.MusicDto;
+import com.bitzen.appmusica.exceptions.BadRequestException;
 import com.bitzen.appmusica.models.Music;
 import com.bitzen.appmusica.repositories.MusicRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,7 +36,7 @@ public class MusicService {
         if(music != null){
             return convertToDto(music);
         }
-        throw new IllegalArgumentException("Not exists music with this ID: " + id);
+        throw new BadRequestException("Not exists music with this ID: " + id);
     }
 
     public MusicDto updateMusic(Long id, MusicDto musicDto){
@@ -45,7 +46,7 @@ public class MusicService {
             music = repository.save(music);
             return convertToDto(music);
         }
-        throw new IllegalArgumentException("Not exists music with this ID: " + id);
+        throw new BadRequestException("Not exists music with this ID: " + id);
     }
 
     public void deleteMusic(Long id){
