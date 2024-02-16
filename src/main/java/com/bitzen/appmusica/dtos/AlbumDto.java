@@ -26,6 +26,6 @@ public class AlbumDto {
 
     private Artist artist;
 
-    public AlbumDto(Long id, Long id_null, String title, String year, String imageUrl) {
+    public AlbumDto(Long id, String title, String year, String imageUrl) {
     }
 }

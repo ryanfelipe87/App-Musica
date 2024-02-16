@@ -24,14 +24,11 @@ import static org.mockito.Mockito.when;
 class AlbumControllerTest {
 
     private static final Long ID = 1L;
-    private static final Long ID_NULL = 2L;
     private static final String TITLE = "Meteora";
     private static final String YEAR = "2000";
     private static final String IMAGE_URL = "lp.com";
 
     public static final int INDEX = 0;
-
-    private Album album = new Album();
 
     private AlbumDto albumDto = new AlbumDto();
 
@@ -137,7 +134,6 @@ class AlbumControllerTest {
     }
 
     private void startAlbum(){
-        album = new Album(ID, ID_NULL, TITLE, YEAR, IMAGE_URL);
-        albumDto = new AlbumDto(ID, ID_NULL,TITLE, YEAR, IMAGE_URL);
+        albumDto = new AlbumDto(ID, TITLE, YEAR, IMAGE_URL);
     }
 }
