@@ -3,6 +3,8 @@ package com.bitzen.appmusica.controllers;
 import com.bitzen.appmusica.dtos.MusicDto;
 import com.bitzen.appmusica.services.MusicService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,9 @@ public class MusicController {
     private MusicService musicService;
 
     @PostMapping
-    public MusicDto createMusic(@RequestBody MusicDto musicDto){
-        return musicService.createMusic(musicDto);
+    public ResponseEntity<MusicDto> createMusic(@RequestBody MusicDto musicDto){
+        musicService.createMusic(musicDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping

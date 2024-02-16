@@ -1,7 +1,6 @@
 package com.bitzen.appmusica.controllers;
 
 import com.bitzen.appmusica.dtos.AlbumDto;
-import com.bitzen.appmusica.models.Album;
 import com.bitzen.appmusica.services.AlbumService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
