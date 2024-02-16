@@ -72,8 +72,14 @@ public class MusicService {
     }
 
     private Music convertToEntity(MusicDto musicDto){
+        validateTrack(musicDto.getTrack());
         Music music = new Music();
         BeanUtils.copyProperties(musicDto, music);
         return music;
+    }
+
+    private void validateTrack(Integer track){
+        if(track <= 0)
+            throw new BadRequestException("Track numbers must be greater than zero");
     }
 }

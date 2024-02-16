@@ -18,13 +18,13 @@ public class Album {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "year_launch")
+    @Column(name = "year_launch", nullable = false)
     private String year;
 
-    @Column
+    @Column(nullable = false)
     private String imageUrl;
 
     @ManyToOne
