@@ -3,6 +3,7 @@ package com.bitzen.appmusica.services;
 import com.bitzen.appmusica.dtos.ArtistDto;
 import com.bitzen.appmusica.exceptions.BadRequestException;
 import com.bitzen.appmusica.models.Artist;
+import com.bitzen.appmusica.patterns.LoggerSingleton;
 import com.bitzen.appmusica.repositories.ArtistRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,14 +20,21 @@ public class ArtistService {
     @Autowired
     private ArtistRepository repository;
 
+    @Autowired
+    private Logger logger = LoggerSingleton.getLogger();
+
     public ArtistDto createArtist(ArtistDto artistDto) {
+        logger.info("Creating artist...");
         Artist artist = convertToEntity(artistDto);
         artist = repository.save(artist);
+        logger.info("Artist created successfully!");
         return convertToDto(artist);
     }
 
     public List<ArtistDto> listAll() {
+        logger.info("Listing all artists...");
         List<Artist> artists = repository.findAll();
+        logger.info("Complete listing!");
         return artists.stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -40,10 +49,12 @@ public class ArtistService {
     }
 
     public ArtistDto updateArtist(Long id, ArtistDto artistDto) {
+        logger.info("Updating artist by ID...");
         Optional<Artist> artistOptional = repository.findById(id);
         if (artistOptional.isPresent()) {
             Artist artist = convertToEntity(artistDto);
             artist = repository.save(artist);
+            logger.info("Artist updated!");
             return convertToDto(artist);
         }
         throw new BadRequestException("Not exists artist with this ID: " + artistDto.getId());
@@ -53,6 +64,7 @@ public class ArtistService {
         Optional<Artist> artistOptional = repository.findById(id);
         if (artistOptional.isPresent()) {
             repository.deleteById(id);
+            logger.info("Removing...");
         }
     }
 
