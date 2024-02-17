@@ -2,6 +2,7 @@ package com.bitzen.appmusica.services;
 
 import com.bitzen.appmusica.dtos.AlbumDto;
 import com.bitzen.appmusica.exceptions.BadRequestException;
+import com.bitzen.appmusica.exceptions.NotFoundException;
 import com.bitzen.appmusica.models.Album;
 import com.bitzen.appmusica.patterns.LoggerSingleton;
 import com.bitzen.appmusica.repositories.AlbumRepository;
@@ -42,14 +43,15 @@ public class AlbumService {
 
     public AlbumDto findAlbumById(Long id){
         Album album = repository.findById(id).orElse(null);
+        logger.info("Finding album by ID: " + id);
         if(album != null){
             return convertToDto(album);
         }
-        throw new BadRequestException("Not exists album with this ID: " + id);
+        throw new BadRequestException("Invalid request with this ID: " + id);
     }
 
     public AlbumDto updateAlbum(Long id, AlbumDto albumDto){
-        logger.info("Updating album by ID...");
+        logger.info("Updating album by ID: " + id);
         Optional<Album> albumOptional = repository.findById(id);
         if(albumOptional.isPresent()){
             Album album = convertToEntity(albumDto);
@@ -57,7 +59,7 @@ public class AlbumService {
             logger.info("Album updated!");
             return convertToDto(album);
         }
-        throw new BadRequestException("Not exists album with this ID: " + id);
+        throw new NotFoundException("Request not found");
     }
 
     public void deleteAlbum(Long id){
