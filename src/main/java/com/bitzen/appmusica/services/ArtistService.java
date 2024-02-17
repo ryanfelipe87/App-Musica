@@ -2,6 +2,7 @@ package com.bitzen.appmusica.services;
 
 import com.bitzen.appmusica.dtos.ArtistDto;
 import com.bitzen.appmusica.exceptions.BadRequestException;
+import com.bitzen.appmusica.exceptions.NotFoundException;
 import com.bitzen.appmusica.models.Artist;
 import com.bitzen.appmusica.patterns.LoggerSingleton;
 import com.bitzen.appmusica.repositories.ArtistRepository;
@@ -42,10 +43,11 @@ public class ArtistService {
 
     public ArtistDto findArtistById(Long id) {
         Artist artist = repository.findById(id).orElse(null);
+        logger.info("Finding artist by ID: " + id);
         if (artist != null) {
             return convertToDto(artist);
         }
-        throw new BadRequestException("Not exists artist with this ID: " + id);
+        throw new BadRequestException("Invalid request with this ID: " + id);
     }
 
     public ArtistDto updateArtist(Long id, ArtistDto artistDto) {
@@ -57,7 +59,7 @@ public class ArtistService {
             logger.info("Artist updated!");
             return convertToDto(artist);
         }
-        throw new BadRequestException("Not exists artist with this ID: " + artistDto.getId());
+        throw new NotFoundException("Request not found");
     }
 
     public void deleteArtist(Long id) {
