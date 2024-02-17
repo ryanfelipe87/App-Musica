@@ -36,6 +36,9 @@ class AlbumServiceTest {
     private AlbumService albumService;
 
     @Mock
+    private ArtistService artistService;
+
+    @Mock
     private AlbumRepository albumRepository;
 
     @Mock
@@ -71,6 +74,7 @@ class AlbumServiceTest {
         assertEquals(album.getTitle(), response.getTitle());
         assertEquals(album.getYear(), response.getYear());
         assertEquals(album.getImageUrl(), response.getImageUrl());
+        assertEquals(album.getArtist(), response.getArtistId());
 
         ArgumentCaptor<Album> albumCaptor = ArgumentCaptor.forClass(Album.class);
         verify(albumRepository).save(albumCaptor.capture());
@@ -79,6 +83,7 @@ class AlbumServiceTest {
         assertEquals(albumDto.getTitle(), capturedAlbum.getTitle());
         assertEquals(albumDto.getYear(), capturedAlbum.getYear());
         assertEquals(albumDto.getImageUrl(), capturedAlbum.getImageUrl());
+        assertEquals(albumDto.getArtistId(), capturedAlbum.getArtist());
 
         verify(logger).info("Creating album...");
         verify(logger).info("Album created successfully!");
@@ -165,7 +170,7 @@ class AlbumServiceTest {
     }
 
     private void startAlbum(){
-        albumDto = new AlbumDto(ID, TITLE, YEAR, IMAGE_URL);
+        albumDto = new AlbumDto(ID, TITLE, YEAR, IMAGE_URL, 1L);
         optionalAlbum = Optional.of(new Album(ID, TITLE, YEAR, IMAGE_URL));
     }
 }

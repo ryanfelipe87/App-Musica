@@ -9,6 +9,7 @@ import com.bitzen.appmusica.repositories.ArtistRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class ArtistService {
     public ArtistDto createArtist(ArtistDto artistDto) {
         logger.info("Creating artist...");
         Artist artist = convertToEntity(artistDto);
+        validateNotBlankAndNotNull(artistDto.getName(), artistDto.getImageUrl());
         artist = repository.save(artist);
         logger.info("Artist created successfully!");
         return convertToDto(artist);
@@ -42,12 +44,11 @@ public class ArtistService {
     }
 
     public ArtistDto findArtistById(Long id) {
-        Artist artist = repository.findById(id).orElse(null);
         logger.info("Finding artist by ID: " + id);
-        if (artist != null) {
-            return convertToDto(artist);
-        }
-        throw new BadRequestException("Invalid request with this ID: " + id);
+        Artist artist = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Artist not found with ID: " + id));
+
+        return convertToDto(artist);
     }
 
     public ArtistDto updateArtist(Long id, ArtistDto artistDto) {
@@ -76,9 +77,14 @@ public class ArtistService {
         return artistDto;
     }
 
-    private Artist convertToEntity(ArtistDto artistDto) {
+    public Artist convertToEntity(ArtistDto artistDto) {
         Artist artist = new Artist();
         BeanUtils.copyProperties(artistDto, artist);
         return artist;
+    }
+
+    private void validateNotBlankAndNotNull(String name, String imageUrl){
+        if(!StringUtils.hasText(name) || !StringUtils.hasText(imageUrl))
+            throw new BadRequestException("Cannot be null or empty");
     }
 }

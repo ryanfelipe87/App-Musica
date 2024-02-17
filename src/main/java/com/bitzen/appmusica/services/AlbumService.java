@@ -1,14 +1,17 @@
 package com.bitzen.appmusica.services;
 
 import com.bitzen.appmusica.dtos.AlbumDto;
+import com.bitzen.appmusica.dtos.ArtistDto;
 import com.bitzen.appmusica.exceptions.BadRequestException;
 import com.bitzen.appmusica.exceptions.NotFoundException;
 import com.bitzen.appmusica.models.Album;
+import com.bitzen.appmusica.models.Artist;
 import com.bitzen.appmusica.patterns.LoggerSingleton;
 import com.bitzen.appmusica.repositories.AlbumRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,11 +25,15 @@ public class AlbumService {
     private AlbumRepository repository;
 
     @Autowired
+    private ArtistService artistService;
+
+    @Autowired
     private Logger logger = LoggerSingleton.getLogger();
 
     public AlbumDto createAlbum(AlbumDto albumDto){
         logger.info("Creating album...");
         Album album = convertToEntity(albumDto);
+        validateNotBlankAndNotNull(albumDto.getTitle(), albumDto.getYear(), albumDto.getImageUrl());
         album = repository.save(album);
         logger.info("Album created successfully!");
         return convertToDto(album);
@@ -53,6 +60,7 @@ public class AlbumService {
     public AlbumDto updateAlbum(Long id, AlbumDto albumDto){
         logger.info("Updating album by ID: " + id);
         Optional<Album> albumOptional = repository.findById(id);
+        validateArtistIdOnUpdate(albumDto);
         if(albumOptional.isPresent()){
             Album album = convertToEntity(albumDto);
             album = repository.save(album);
@@ -75,6 +83,25 @@ public class AlbumService {
     private Album convertToEntity(AlbumDto albumDto){
         Album album = new Album();
         BeanUtils.copyProperties(albumDto, album);
+        album.setArtist(verifyArtist(albumDto.getArtistId()));
         return album;
+    }
+
+    private Artist verifyArtist(Long artistId){
+        ArtistDto artistById = artistService.findArtistById(artistId);
+        if(artistById == null){
+            throw new NotFoundException("Artist not found with ID: " + artistId);
+        }
+        return artistService.convertToEntity(artistById);
+    }
+
+    private void validateNotBlankAndNotNull(String title, String year, String imageUrl){
+        if(!StringUtils.hasText(title) || !StringUtils.hasText(year) || !StringUtils.hasText(imageUrl))
+            throw new BadRequestException("Cannot be null or empty");
+    }
+
+    private void validateArtistIdOnUpdate(AlbumDto albumDto){
+        if(albumDto.getArtistId() != null)
+            albumDto.getArtistId();
     }
 }

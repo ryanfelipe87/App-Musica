@@ -130,6 +130,6 @@ class MusicControllerTest {
     }
 
     private void startMusic(){
-        musicDto = new MusicDto(ID, TITLE, DURATION, TRACK);
+        musicDto = new MusicDto(ID, TITLE, DURATION, TRACK, null);
     }
 }

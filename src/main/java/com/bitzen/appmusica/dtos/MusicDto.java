@@ -1,13 +1,14 @@
 package com.bitzen.appmusica.dtos;
 
-import com.bitzen.appmusica.models.Album;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Getter
 @Setter
@@ -17,18 +18,16 @@ public class MusicDto {
 
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "Cannot be null or empty")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Cannot be null or empty")
     private String duration;
 
-    @NotNull
+    @NotNull(message = "Cannot be null")
     @Positive
     private Integer track;
 
-    private Album album;
+    private Long albumId;
 
-    public MusicDto(Long id, String title, String duration, Integer track) {
-    }
 }

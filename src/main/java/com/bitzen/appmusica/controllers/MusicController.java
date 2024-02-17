@@ -1,5 +1,6 @@
 package com.bitzen.appmusica.controllers;
 
+import com.bitzen.appmusica.dtos.MusicAlbumDTO;
 import com.bitzen.appmusica.dtos.MusicDto;
 import com.bitzen.appmusica.services.MusicService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,6 +44,11 @@ public class MusicController {
     )
     public MusicDto getMusicById(@PathVariable Long id){
         return musicService.findMusicById(id);
+    }
+
+    @GetMapping("/artist/{artistId}")
+    public List<MusicAlbumDTO> getMusicAndAlbumByArtist(@PathVariable Long artistId) {
+        return musicService.findMusicAndAlbumByArtistId(artistId);
     }
 
     @PutMapping(path = "/{id}")

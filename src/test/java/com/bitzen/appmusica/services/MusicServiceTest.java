@@ -86,8 +86,8 @@ class MusicServiceTest {
     @Test
     void whenListAllMusicsTheReturnSuccess() {
         List<Music> musics = new ArrayList<>();
-        musics.add(new Music(ID, TITLE, DURATION, TRACK));
-        musics.add(new Music(2L, "The catalyst", "6:02", 9));
+        musics.add(new Music(ID, TITLE, DURATION, TRACK, null));
+        musics.add(new Music(2L, "The catalyst", "6:02", 9, null));
 
         when(musicRepository.findAll()).thenReturn(musics);
 
@@ -163,6 +163,6 @@ class MusicServiceTest {
     }
 
     private void startMusic(){
-        musicDto = new MusicDto(ID, TITLE, DURATION, TRACK);
+        musicDto = new MusicDto(ID, TITLE, DURATION, TRACK, null);
     }
 }
