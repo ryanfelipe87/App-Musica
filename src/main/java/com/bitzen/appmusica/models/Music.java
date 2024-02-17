@@ -29,4 +29,7 @@ public class Music {
 
     @ManyToOne
     private Album album;
+
+    public Music(Long id, String title, String duration, Integer track) {
+    }
 }
