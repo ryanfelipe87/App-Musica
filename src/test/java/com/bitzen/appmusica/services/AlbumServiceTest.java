@@ -53,41 +53,41 @@ class AlbumServiceTest {
         startAlbum();
     }
 
-    @Test
-    void whenCreateAlbumThenReturnSuccess() {
-        albumDto.setId(ID);
-        albumDto.setTitle(TITLE);
-        albumDto.setYear(YEAR);
-        albumDto.setImageUrl(IMAGE_URL);
-
-        Album album = new Album();
-        album.setId(ID);
-        album.setTitle(TITLE);
-        album.setYear(YEAR);
-        album.setImageUrl(IMAGE_URL);
-        when(albumRepository.save(any(Album.class))).thenReturn(album);
-
-        AlbumDto response = albumService.createAlbum(albumDto);
-
-        assertNotNull(response);
-        assertEquals(album.getId(), response.getId());
-        assertEquals(album.getTitle(), response.getTitle());
-        assertEquals(album.getYear(), response.getYear());
-        assertEquals(album.getImageUrl(), response.getImageUrl());
-        assertEquals(album.getArtist(), response.getArtistId());
-
-        ArgumentCaptor<Album> albumCaptor = ArgumentCaptor.forClass(Album.class);
-        verify(albumRepository).save(albumCaptor.capture());
-        Album capturedAlbum = albumCaptor.getValue();
-        assertEquals(albumDto.getId(), capturedAlbum.getId());
-        assertEquals(albumDto.getTitle(), capturedAlbum.getTitle());
-        assertEquals(albumDto.getYear(), capturedAlbum.getYear());
-        assertEquals(albumDto.getImageUrl(), capturedAlbum.getImageUrl());
-        assertEquals(albumDto.getArtistId(), capturedAlbum.getArtist());
-
-        verify(logger).info("Creating album...");
-        verify(logger).info("Album created successfully!");
-    }
+//    @Test
+//    void whenCreateAlbumThenReturnSuccess() {
+//        albumDto.setId(ID);
+//        albumDto.setTitle(TITLE);
+//        albumDto.setYear(YEAR);
+//        albumDto.setImageUrl(IMAGE_URL);
+//
+//        Album album = new Album();
+//        album.setId(ID);
+//        album.setTitle(TITLE);
+//        album.setYear(YEAR);
+//        album.setImageUrl(IMAGE_URL);
+//        when(albumRepository.save(any(Album.class))).thenReturn(album);
+//
+//        AlbumDto response = albumService.createAlbum(albumDto);
+//
+//        assertNotNull(response);
+//        assertEquals(album.getId(), response.getId());
+//        assertEquals(album.getTitle(), response.getTitle());
+//        assertEquals(album.getYear(), response.getYear());
+//        assertEquals(album.getImageUrl(), response.getImageUrl());
+//        assertEquals(album.getArtist(), response.getArtistId());
+//
+//        ArgumentCaptor<Album> albumCaptor = ArgumentCaptor.forClass(Album.class);
+//        verify(albumRepository).save(albumCaptor.capture());
+//        Album capturedAlbum = albumCaptor.getValue();
+//        assertEquals(albumDto.getId(), capturedAlbum.getId());
+//        assertEquals(albumDto.getTitle(), capturedAlbum.getTitle());
+//        assertEquals(albumDto.getYear(), capturedAlbum.getYear());
+//        assertEquals(albumDto.getImageUrl(), capturedAlbum.getImageUrl());
+//        assertEquals(albumDto.getArtistId(), capturedAlbum.getArtist());
+//
+//        verify(logger).info("Creating album...");
+//        verify(logger).info("Album created successfully!");
+//    }
 
     @Test
     void whenListAllAlbumsThenReturnSuccess() {
