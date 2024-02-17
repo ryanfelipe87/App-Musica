@@ -1,0 +1,20 @@
+-- Inserir artistas
+INSERT INTO Artist (id, name, image_url) VALUES
+                                         (1,'Artista 1', 'url_imagem_artista_1'),
+                                         (2, 'Artista 2', 'url_imagem_artista_2'),
+                                         (3, 'Artista 3', 'url_imagem_artista_3');
+
+-- Inserir álbuns
+INSERT INTO Album (id, title, year_launch, image_url, artist_id) VALUES
+                                                                 (1, 'Álbum 1', '2020', 'url_imagem_album_1', 1),
+                                                                 (2, 'Álbum 2', '2018', 'url_imagem_album_2', 2),
+                                                                 (3, 'Álbum 3', '2015', 'url_imagem_album_3', 3);
+
+-- Inserir músicas
+INSERT INTO Music (id, title, duration, track, album_id) VALUES
+                                                         (1, 'Música 1', '03:45', 1, 1),
+                                                         (2, 'Música 2', '04:20', 2, 1),
+                                                         (3, 'Música 3', '02:55', 1, 2),
+                                                         (4, 'Música 4', '03:10', 2, 2),
+                                                         (5, 'Música 5', '05:30', 1, 3),
+                                                         (6,'Música 6', '04:15', 2, 3);
