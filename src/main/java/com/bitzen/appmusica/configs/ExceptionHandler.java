@@ -16,8 +16,7 @@ public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> handlerNotFoundException(NotFoundException exception) {
-        exception.printStackTrace();
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Action Not Found ");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
